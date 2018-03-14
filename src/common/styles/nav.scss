@@ -1,0 +1,36 @@
+@mixin nav-display {
+  height: 40px;
+  display: inline-block;
+  a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+  }
+}
+.nav {
+  width: 136px;
+  @include nav-display;
+}
+
+.nav-without-icon {
+  width: 160px;
+  @include nav-display;
+}
+
+.sub-nav {
+  width: 118px;
+  @include nav-display;
+}
+
+.sub-nav-without-icon {
+  width: 142px;
+  @include nav-display;
+}
+.ant-menu-item-active,
+.ant-menu-item-selected {
+  a {
+    color: #fff;
+  }
+}

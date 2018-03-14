@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
-import {Layout, Menu, Breadcrumb, Icon} from 'antd';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
 import HelloContainer from './containers/Hello';
+import HomeContainer from './containers/Home';
+import CreateMaterialsContainer from './containers/CreateMaterials';
 import './common/styles/index.scss';
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -16,7 +18,6 @@ class App extends Component {
         this.onCollapse = this.onCollapse.bind(this);
     }
     onCollapse (collapsed) {
-        console.log(collapsed);
         this.setState({collapsed});
     }
 
@@ -32,21 +33,20 @@ class App extends Component {
                         <div className="logo"/>
                         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                             <Menu.Item key="1">
-                                <Icon type="pie-chart"/>
-                                <span>Option 1</span>
-                            </Menu.Item>
-                            <Menu.Item key="2">
-                                <Icon type="desktop"/>
-                                <span>Option 2</span>
+                                <Icon type="dashboard" />
+                                <span className="nav"><Link to="/">Home</Link></span>
                             </Menu.Item>
                             <SubMenu
-                                key="sub1"
-                                title={<span><Icon type="user"/><span>User</span></span>}
+                                key="materials"
+                                title={<span className="sub-nav-without-icon">原料管理</span>}
                             >
-                                <Menu.Item key="3">Tom</Menu.Item>
-                                <Menu.Item key="4">Bill</Menu.Item>
-                                <Menu.Item key="5">Alex</Menu.Item>
+                                <Menu.Item key="2">原料管理</Menu.Item>
+                                <Menu.Item key="3"><Link to="/materials/add">新增原料</Link></Menu.Item>
                             </SubMenu>
+                            <Menu.Item key="4">
+                                <Icon type="pie-chart"/>
+                                <span className="nav"><Link to="/hello">Hello</Link></span>
+                            </Menu.Item>
                             <SubMenu
                                 key="sub2"
                                 title={<span><Icon type="team"/><span>Team</span></span>}
@@ -67,9 +67,12 @@ class App extends Component {
                                 <Breadcrumb.Item>User</Breadcrumb.Item>
                                 <Breadcrumb.Item>Bill</Breadcrumb.Item>
                             </Breadcrumb>
-                            <div style={{padding: 24, background: '#fff', minHeight: 360}}>
-                                Bill is a cat.
-                            </div>
+                            <Switch>
+                                <Route exact path="/" component={HomeContainer} />
+                                <Route path="/hello" component={HelloContainer} />
+                                <Route path="/materials/add/:id?" component={CreateMaterialsContainer} />
+                                <Redirect to="/" />
+                            </Switch>
                         </Content>
                         <Footer style={{textAlign: 'center'}}>
                             Ant Design ©2016 Created by Ant UED

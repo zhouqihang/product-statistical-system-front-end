@@ -3,7 +3,6 @@ import {initAction} from '../actions/Hello';
 import {connect} from 'react-redux';
 
 const mapStateToProps = (state) => {
-    console.log(state, 'state');
     return {
         props: state.hello
     };

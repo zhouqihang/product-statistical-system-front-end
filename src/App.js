@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-ro
 import HelloContainer from './containers/Hello';
 import HomeContainer from './containers/Home';
 import CreateMaterialsContainer from './containers/CreateMaterials';
+import MaterialsContainer from './containers/Materials';
 import './common/styles/index.scss';
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -40,7 +41,7 @@ class App extends Component {
                                 key="materials"
                                 title={<span className="sub-nav-without-icon">原料管理</span>}
                             >
-                                <Menu.Item key="2">原料管理</Menu.Item>
+                                <Menu.Item key="2"><Link to="/materials">原料管理</Link></Menu.Item>
                                 <Menu.Item key="3"><Link to="/materials/add">新增原料</Link></Menu.Item>
                             </SubMenu>
                             <Menu.Item key="4">
@@ -71,6 +72,7 @@ class App extends Component {
                                 <Route exact path="/" component={HomeContainer} />
                                 <Route path="/hello" component={HelloContainer} />
                                 <Route path="/materials/add/:id?" component={CreateMaterialsContainer} />
+                                <Route path="/materials" component={MaterialsContainer} />
                                 <Redirect to="/" />
                             </Switch>
                         </Content>

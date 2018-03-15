@@ -17,14 +17,42 @@ const buttonItemLayout = {
 
 class CreateMaterials extends Component {
 
-    componentDidMount() {
+    constructor(props) {
+        super(props);
+        this.onInputChange = this.onInputChange.bind(this);
+        this.onInputNumberChange = this.onInputNumberChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
 
+    onInputChange(e) {
+        const { dispatch, onInputChangeAction } = this.props;
+        dispatch(onInputChangeAction(e.target.name, e.target.value));
+    }
+
+    onInputNumberChange(name, value) {
+        const { dispatch, onInputChangeAction } = this.props;
+        dispatch(onInputChangeAction(name, value));
+    }
+
+    onSubmit() {
+        const { dispatch, createMaterial } = this.props;
+        dispatch(createMaterial());
+    }
+
+    componentDidMount() {
+        // const { dispatch, onInputChangeAction } = this.props;
+        // dispatch(onInputChangeAction('title', 'test'));
+        // dispatch(createMaterial());
+        // console.log(dispatch);
+    }
+
+    componentWillUnmount() {
+        this.props.dispatch(this.props.initState());
     }
 
     render() {
         const {
             createMaterials,
-            onNumberChangeAction
         } = this.props;
         const {
             number,
@@ -33,6 +61,7 @@ class CreateMaterials extends Component {
             count,
             danger,
             remark,
+            isPosting,
         } = createMaterials;
 
         return (
@@ -46,7 +75,7 @@ class CreateMaterials extends Component {
                         validateStatus={number.status}
                         help={number.help}
                     >
-                        <Input placeholder="例:MD-001" value={number.value} onChange={onNumberChangeAction} />
+                        <Input name="number" placeholder="例:MD-001" disabled={isPosting} value={number.value} onChange={this.onInputChange} />
                     </FormItem>
                     <FormItem
                         label="原料名称"
@@ -55,7 +84,7 @@ class CreateMaterials extends Component {
                         validateStatus={title.status}
                         help={title.help}
                     >
-                        <Input placeholder="例:荧光剂" value={title.value} />
+                        <Input name="title" placeholder="例:荧光剂" disabled={isPosting} value={title.value} onChange={this.onInputChange} />
                     </FormItem>
                     <FormItem
                         label="计量单位"
@@ -64,7 +93,7 @@ class CreateMaterials extends Component {
                         validateStatus={unit.status}
                         help={unit.help}
                     >
-                        <Input placeholder="例:G、KG、T、ML、L" value={unit.value} />
+                        <Input name="unit" placeholder="例:G、KG、T、ML、L" disabled={isPosting} value={unit.value} onChange={this.onInputChange} />
                     </FormItem>
                     <FormItem
                         label="报警数量"
@@ -73,7 +102,7 @@ class CreateMaterials extends Component {
                         validateStatus={danger.status}
                         help={danger.help}
                     >
-                        <InputNumber min={0} step={0.001} value={danger.value} />
+                        <InputNumber name="danger" disabled={isPosting} min={0} step={0.001} value={danger.value} onChange={(v) => this.onInputNumberChange('danger', v)} />
                     </FormItem>
                     <FormItem
                         label="原料库存"
@@ -82,7 +111,7 @@ class CreateMaterials extends Component {
                         validateStatus={count.status}
                         help={count.help}
                     >
-                        <InputNumber min={0} step={0.001} value={count.value} />
+                        <InputNumber name="count" disabled={isPosting} min={0} step={0.001} value={count.value} onChange={(v) => this.onInputNumberChange('count', v)} />
                     </FormItem>
                     <FormItem
                         label="备注"
@@ -91,13 +120,13 @@ class CreateMaterials extends Component {
                         validateStatus={remark.status}
                         help={remark.help}
                     >
-                        <TextArea placeholder="请输入" autosize={{ minRows: 2, maxRows: 6 }} value={remark.value} />
+                        <TextArea name="remark" placeholder="请输入" disabled={isPosting} autosize={{ minRows: 2, maxRows: 6 }} value={remark.value} onChange={this.onInputChange} />
                     </FormItem>
                     <FormItem
                         {...buttonItemLayout}
                     >
-                        <Button type="primary">确认</Button>
-                        <Button type="default" className="ml24">取消</Button>
+                        <Button type="primary" loading={isPosting} onClick={this.onSubmit}>确认</Button>
+                        <Button type="default" disabled={isPosting} className="ml24">取消</Button>
                     </FormItem>
                 </Form>
             </div>

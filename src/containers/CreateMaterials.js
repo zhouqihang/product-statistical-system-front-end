@@ -4,7 +4,7 @@
 
 import { connect } from 'react-redux';
 import Materials from '../components/Materials';
-import { onNumberChangeAction } from '../actions/CreateMaterials';
+import { onInputChangeAction, createMaterial, initState } from '../actions/CreateMaterials';
 
 const mapStateToProps = ({ createMaterials }, router) => {
     return {
@@ -13,9 +13,12 @@ const mapStateToProps = ({ createMaterials }, router) => {
     };
 };
 
-const mapDispatchToProps = {
-    onNumberChangeAction,
-};
+const mapDispatchToProps = (dispatch) => ({
+    onInputChangeAction,
+    createMaterial,
+    initState,
+    dispatch,
+});
 
 const CreateMaterialsContainer = connect(
     mapStateToProps,

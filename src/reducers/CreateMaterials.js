@@ -1,7 +1,18 @@
 /**
  * Created by zhouqihang on 2018/3/14.
  */
-import { NUMBER_CHANGE } from '../actions/CreateMaterials';
+import {
+    NUMBER_CHANGE,
+    TITLE_CHANGE,
+    UNIT_CHANGE,
+    COUNT_CHANGE,
+    DANGER_CHANGE,
+    REMARK_CHANGE,
+    POSTING_MATERIAL,
+    POST_MATERIAL_SUCCESS,
+    POST_MATERIAL_FAILURE,
+    INIT_CREATE_STATE,
+} from '../actions/CreateMaterials';
 
 const statusEnum = {
     normal: '',
@@ -43,13 +54,13 @@ let defaultState = {
         status: statusEnum.normal,
         help: '',
     },
+    isPosting: false,
 };
 
 const createMaterials = (state = defaultState, action) => {
+    const { title, number, unit, danger, count, remark } = state;
     switch (action.type) {
         case NUMBER_CHANGE:
-            const { title, number } = state;
-            console.log((title.value === '' && action.value === '') ? statusEnum.error : statusEnum.normal);
             return {
                 ...state,
                 number: {
@@ -57,7 +68,64 @@ const createMaterials = (state = defaultState, action) => {
                     value: action.value,
                     status: (title.value === '' && action.value === '') ? statusEnum.error : statusEnum.normal,
                 },
+                title: {
+                    ...title,
+                    status: (title.value === '' && action.value === '') ? statusEnum.error : statusEnum.normal,
+                },
             };
+        case TITLE_CHANGE:
+            return {
+                ...state,
+                number: {
+                    ...number,
+                    status: (number.value === '' && action.value === '') ? statusEnum.error : statusEnum.normal,
+                },
+                title: {
+                    ...title,
+                    value: action.value,
+                    status: (number.value === '' && action.value === '') ? statusEnum.error : statusEnum.normal,
+                },
+            };
+        case UNIT_CHANGE:
+            return {
+                ...state,
+                unit: {
+                    ...unit,
+                    value: action.value,
+                },
+            };
+        case DANGER_CHANGE:
+            return {
+                ...state,
+                danger: {
+                    ...danger,
+                    value: action.value,
+                },
+            };
+        case COUNT_CHANGE:
+            return {
+                ...state,
+                count: {
+                    ...count,
+                    value: action.value,
+                },
+            };
+        case REMARK_CHANGE:
+            return {
+                ...state,
+                remark: {
+                    ...remark,
+                    value: action.value,
+                },
+            };
+        case POSTING_MATERIAL:
+            return {...state, isPosting: true};
+        case POST_MATERIAL_SUCCESS:
+            return {...state, isPosting: false, id: action.value.id};
+        case POST_MATERIAL_FAILURE:
+            return {...state, isPosting: false};
+        case INIT_CREATE_STATE:
+            return defaultState;
         default:
             return state;
     }

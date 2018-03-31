@@ -15,7 +15,7 @@ const buttonItemLayout = {
     wrapperCol: { span: 14, offset: 4 },
 };
 
-class CreateMaterials extends Component {
+class Create extends Component {
 
     constructor(props) {
         super(props);
@@ -40,10 +40,7 @@ class CreateMaterials extends Component {
     }
 
     componentDidMount() {
-        // const { dispatch, onInputChangeAction } = this.props;
-        // dispatch(onInputChangeAction('title', 'test'));
-        // dispatch(createMaterial());
-        // console.log(dispatch);
+        // nothing to do...
     }
 
     componentWillUnmount() {
@@ -133,4 +130,4 @@ class CreateMaterials extends Component {
         );
     }
 }
-export default CreateMaterials;
+export default Create;

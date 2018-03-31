@@ -3,9 +3,11 @@
  */
 
 export const create = `/materials`;
+export const show = `/materials`;
 
 const materials = {
     create,
+    show,
 };
 
 export default materials;

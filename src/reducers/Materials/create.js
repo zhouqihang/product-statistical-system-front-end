@@ -12,7 +12,7 @@ import {
     POST_MATERIAL_SUCCESS,
     POST_MATERIAL_FAILURE,
     INIT_CREATE_STATE,
-} from '../actions/CreateMaterials';
+} from '../../actions/Materials/create';
 
 const statusEnum = {
     normal: '',

@@ -3,8 +3,8 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
 import HelloContainer from './containers/Hello';
 import HomeContainer from './containers/Home';
-import CreateMaterialsContainer from './containers/CreateMaterials';
-import MaterialsContainer from './containers/Materials';
+import CreateMaterialsContainer from './containers/Materials/create';
+import MaterialsContainer from './containers/Materials/show';
 import './common/styles/index.scss';
 
 const {Header, Content, Footer, Sider} = Layout;

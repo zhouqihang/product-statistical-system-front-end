@@ -1,8 +1,16 @@
 /**
  * Created by zhouqihang on 2018/3/14.
  */
-import CreateMaterials from './CreateMaterials';
-import Materials from './Materials';
+import Create from './Create';
+import Show from './Show';
 
-Materials.CreateMaterials = CreateMaterials;
+export const CreateMaterials = Create;
+export const ShowMaterials = Show;
+
+const Materials = {
+    CreateMaterials,
+    ShowMaterials,
+};
+
 export default Materials;
+

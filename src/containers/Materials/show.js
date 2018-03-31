@@ -2,20 +2,23 @@
  * Created by zhouqihang on 2018/3/15.
  */
 import { connect } from 'react-redux';
-import Materials from '../components/Materials';
+import { ShowMaterials } from '../../components/Materials/index';
+import {
+    requestMaterials,
+} from '../../actions/Materials/show';
 
-const mapStateToProps = ({ materials }, router) => ({
+const mapStateToProps = ({ materials }) => ({
     materials,
-    router,
 });
 
 const mapDispatchToProps = dispatch => ({
     dispatch,
+    requestMaterials,
 });
 
 const MaterialsContainer = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Materials);
+)(ShowMaterials);
 
 export default MaterialsContainer;

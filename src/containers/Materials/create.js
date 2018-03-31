@@ -3,13 +3,12 @@
  */
 
 import { connect } from 'react-redux';
-import Materials from '../components/Materials';
-import { onInputChangeAction, createMaterial, initState } from '../actions/CreateMaterials';
+import { CreateMaterials } from '../../components/Materials/index';
+import { onInputChangeAction, createMaterial, initState } from '../../actions/Materials/create';
 
-const mapStateToProps = ({ createMaterials }, router) => {
+const mapStateToProps = ({ createMaterials }) => {
     return {
         createMaterials,
-        router,
     };
 };
 
@@ -23,6 +22,6 @@ const mapDispatchToProps = (dispatch) => ({
 const CreateMaterialsContainer = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Materials.CreateMaterials);
+)(CreateMaterials);
 
 export default CreateMaterialsContainer;

@@ -2,8 +2,8 @@
  * Created by zhouqihang on 2018/3/14.
  */
 import { message } from 'antd';
-import { post } from '../common/requests/request';
-import { create } from '../common/requests/Materials';
+import { post } from '../../common/requests/request';
+import { create } from '../../common/requests/Materials';
 
 export const NUMBER_CHANGE = 'number_change';
 export const TITLE_CHANGE = 'title_change';

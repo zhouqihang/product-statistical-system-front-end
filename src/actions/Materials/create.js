@@ -35,6 +35,11 @@ export const onInputChangeAction = (name, value) => ({
     value: value,
 });
 
+/**
+ * 校验数据
+ * @param {Object} createMaterials create materials state
+ * @returns {boolean}
+ */
 const canCreateMaterial = (createMaterials) => {
     const {
         number,
@@ -93,6 +98,9 @@ export const createMaterial = () => {
     }
 };
 
+/**
+ * 初始化状态
+ */
 export const initState = () => ({
     type: INIT_CREATE_STATE,
 });

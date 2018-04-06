@@ -6,7 +6,21 @@ import axios from 'axios';
 
 const timeout = 8000;
 
+const object2string = obj => {
+    let arr = [];
+    for (let k in obj) {
+        if (obj[k] === '' || obj[k] === null || obj[k] === undefined) {
+            continue;
+        }
+        arr.push(`${k}=${obj[k]}`);
+    }
+    return '?' + arr.join('&');
+};
+
 const base = (url, params = {}, method = 'get') => new Promise((resolve, reject) => {
+    if (method === 'get') {
+        url += object2string(params);
+    }
     axios({method, url, data: params, timeout})
         .then(res => resolve(res.data))
         .catch(error => {

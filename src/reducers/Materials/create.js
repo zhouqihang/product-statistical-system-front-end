@@ -123,7 +123,7 @@ const createMaterials = (state = defaultState, action) => {
         case POSTING_MATERIAL:
             return {...state, isPosting: true};
         case POST_MATERIAL_SUCCESS:
-            return {...state, isPosting: false, id: action.value.id};
+            return {...state, isPosting: false, isCreating: false};
         case POST_MATERIAL_FAILURE:
             return {...state, isPosting: false};
         case INIT_CREATE_STATE:

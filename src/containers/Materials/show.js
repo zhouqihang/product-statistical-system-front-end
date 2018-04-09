@@ -11,7 +11,9 @@ import {
 
 import {
     changeCreateStatus,
-    initState
+    initState,
+    onInputChangeAction as onCreateInputChangeAction,
+    createMaterial,
 } from '../../actions/Materials/create';
 
 const mapStateToProps = ({ materials, createMaterials }) => ({
@@ -24,8 +26,12 @@ const mapDispatchToProps = dispatch => ({
     requestMaterials,
     resetQueryAction,
     onInputChangeAction,
+
+    // create
     changeCreateStatus,
     initState,
+    onCreateInputChangeAction,
+    createMaterial
 });
 
 const MaterialsContainer = connect(

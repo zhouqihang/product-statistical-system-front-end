@@ -2,7 +2,7 @@
  * Created by zhouqihang on 2018/3/14.
  */
 import React, { Component } from 'react';
-import { Table, Form, Row, Col, Button, Icon, Input } from 'antd';
+import { Table, Form, Row, Col, Button, Input } from 'antd';
 import InputNumberRange from '../Base/InputNumberRange';
 import CreateModal from './CreateModal';
 
@@ -21,6 +21,8 @@ class Show extends Component {
         this.resetQuery = this.resetQuery.bind(this);
         this.openCreateModal = this.openCreateModal.bind(this);
         this.closeCreateModal = this.closeCreateModal.bind(this);
+        this.onCreateInputChange = this.onCreateInputChange.bind(this);
+        this.createMaterial = this.createMaterial.bind(this);
     }
 
     onInputChange({ target }) {
@@ -45,6 +47,14 @@ class Show extends Component {
     }
     closeCreateModal() {
         this.props.dispatch(this.props.initState());
+    }
+
+    onCreateInputChange(name, value) {
+        this.props.dispatch(this.props.onCreateInputChangeAction(name, value))
+    }
+
+    createMaterial() {
+        this.props.dispatch(this.props.createMaterial());
     }
 
     componentDidMount() {
@@ -117,8 +127,9 @@ class Show extends Component {
                 <Table columns={columns} dataSource={dataSource} rowKey="id" loading={isLoading} />
                 <CreateModal
                     createMaterials={createMaterials}
-                    onOk={this.closeCreateModal}
+                    onOk={this.createMaterial}
                     onCancel={this.closeCreateModal}
+                    onCreateInputChange={this.onCreateInputChange}
                 />
             </div>
         );

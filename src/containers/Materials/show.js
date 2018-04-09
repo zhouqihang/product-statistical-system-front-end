@@ -9,7 +9,7 @@ import {
     resetQueryAction,
 } from '../../actions/Materials/show';
 
-const mapStateToProps = ({ materials }) => ({
+const mapStateToProps = ({ materials, createMaterials }) => ({
     materials,
 });
 

@@ -3,14 +3,9 @@
  */
 import Create from './Create';
 import Show from './Show';
+import CreateModal from './CreateModal';
 
 export const CreateMaterials = Create;
 export const ShowMaterials = Show;
-
-const Materials = {
-    CreateMaterials,
-    ShowMaterials,
-};
-
-export default Materials;
+export const CreateMaterialsModal = CreateModal;
 

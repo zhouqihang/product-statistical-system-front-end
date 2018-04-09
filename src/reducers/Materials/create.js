@@ -55,6 +55,7 @@ let defaultState = {
         help: '',
     },
     isPosting: false,
+    isCreating: false,
 };
 
 const createMaterials = (state = defaultState, action) => {

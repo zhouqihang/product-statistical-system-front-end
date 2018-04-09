@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { Table, Form, Row, Col, Button, Icon, Input } from 'antd';
 import InputNumberRange from '../Base/InputNumberRange';
+import CreateModal from './CreateModal';
 
 const FormItem = Form.Item;
 
@@ -43,7 +44,7 @@ class Show extends Component {
 
     render() {
         // rowSelection={rowSelection}
-        const { materials } = this.props;
+        const { materials, createMaterials } = this.props;
         const { columns, dataSource, isLoading, number, title, unit, countBegin, countEnd } = materials;
         const startProps = {
             min: 0,
@@ -88,15 +89,24 @@ class Show extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={24} style={{ textAlign: 'right' }}>
+                        <Col span={12}>
+                            <Button ghost type="primary" icon="plus">
+                                新增
+                            </Button>
+                            <Button ghost type="danger" className="ml8" icon="delete">
+                                删除
+                            </Button>
+                        </Col>
+                        <Col span={12} style={{ textAlign: 'right' }}>
                             <Button type="primary" onClick={this.handleSearch} loading={isLoading}>搜索</Button>
-                            <Button style={{ marginLeft: 8 }} onClick={this.resetQuery}>
+                            <Button className="ml8" onClick={this.resetQuery}>
                                 重置
                             </Button>
                         </Col>
                     </Row>
                 </Form>
                 <Table columns={columns} dataSource={dataSource} rowKey="id" loading={isLoading} />
+                <CreateModal createMaterials={createMaterials}  />
             </div>
         );
     }

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-ro
 import HelloContainer from './containers/Hello';
 import HomeContainer from './containers/Home';
 import CreateMaterialsContainer from './containers/Materials/create';
-import MaterialsContainer from './containers/Materials/show';
+import MaterialsContainer from './containers/Materials';
 import './common/styles/index.scss';
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -37,13 +37,17 @@ class App extends Component {
                                 <Icon type="dashboard" />
                                 <span className="nav"><Link to="/">Home</Link></span>
                             </Menu.Item>
-                            <SubMenu
-                                key="materials"
-                                title={<span className="sub-nav-without-icon">原料管理</span>}
-                            >
-                                <Menu.Item key="2"><Link to="/materials">原料管理</Link></Menu.Item>
-                                <Menu.Item key="3"><Link to="/materials/add">新增原料</Link></Menu.Item>
-                            </SubMenu>
+                            <Menu.Item key="2">
+                                {/*<Icon type="dashboard" />*/}
+                                <span className="nav-without-icon"><Link to="/materials">原料管理</Link></span>
+                            </Menu.Item>
+                            {/*<SubMenu*/}
+                                {/*key="materials"*/}
+                                {/*title={<span className="sub-nav-without-icon">原料管理</span>}*/}
+                            {/*>*/}
+                                {/*<Menu.Item key="2"><Link to="/materials">原料管理</Link></Menu.Item>*/}
+                                {/*<Menu.Item key="3"><Link to="/materials/add">新增原料</Link></Menu.Item>*/}
+                            {/*</SubMenu>*/}
                             <Menu.Item key="4">
                                 <Icon type="pie-chart"/>
                                 <span className="nav"><Link to="/hello">Hello</Link></span>

@@ -3,35 +3,36 @@
  */
 import React from 'react';
 import { Modal } from 'antd';
+import PropTypes from 'prop-types';
 
 class CreateModal extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            confirmLoading: false,
-        }
+
+    shouldComponentUpdate(nextProps) {
+        return !(
+            this.props.createMaterials.isCreating === false
+            && nextProps.createMaterials.isCreating === false
+        )
     }
-
-    handleOk() {
-
-    }
-
-    handleCancel() {
-
-    }
-
     render() {
+        const { createMaterials } = this.props;
+        const { isCreating, isPosting } = createMaterials;
         return (
-            <Modal title="Title"
-                   visible={true}
-                   onOk={this.handleOk}
-                   confirmLoading={this.state.confirmLoading}
-                   onCancel={this.handleCancel}
+            <Modal title="新增原料"
+                   visible={isCreating}
+                   onOk={this.props.onOk}
+                   confirmLoading={isPosting}
+                   onCancel={this.props.onCancel}
             >
                 {/*<Create />*/}
             </Modal>
         );
     }
 }
+
+CreateModal.propTypes = {
+    onOk: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    createMaterials: PropTypes.object.isRequired,
+};
 
 export default CreateModal;

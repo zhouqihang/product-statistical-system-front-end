@@ -15,6 +15,7 @@ export const POSTING_MATERIAL = 'posting_material';
 export const POST_MATERIAL_SUCCESS = 'post_material_success';
 export const POST_MATERIAL_FAILURE = 'post_material_failure';
 export const INIT_CREATE_STATE = 'init_create_state';
+export const CHANGE_CREATE_STATUS = 'change_create_status';
 
 const mapNameToAction = {
     number: NUMBER_CHANGE,
@@ -103,4 +104,13 @@ export const createMaterial = () => {
  */
 export const initState = () => ({
     type: INIT_CREATE_STATE,
+});
+
+/**
+ * 更改isCreating
+ * @param {boolean} isCreating
+ */
+export const changeCreateStatus = isCreating => ({
+    type: CHANGE_CREATE_STATUS,
+    value: isCreating,
 });

@@ -19,6 +19,8 @@ class Show extends Component {
         this.onInputNumberChange = this.onInputNumberChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.resetQuery = this.resetQuery.bind(this);
+        this.openCreateModal = this.openCreateModal.bind(this);
+        this.closeCreateModal = this.closeCreateModal.bind(this);
     }
 
     onInputChange({ target }) {
@@ -36,6 +38,13 @@ class Show extends Component {
 
     resetQuery() {
         this.props.dispatch(this.props.resetQueryAction());
+    }
+
+    openCreateModal() {
+        this.props.dispatch(this.props.changeCreateStatus(true));
+    }
+    closeCreateModal() {
+        this.props.dispatch(this.props.initState());
     }
 
     componentDidMount() {
@@ -90,7 +99,7 @@ class Show extends Component {
                     </Row>
                     <Row>
                         <Col span={12}>
-                            <Button ghost type="primary" icon="plus">
+                            <Button ghost type="primary" icon="plus" onClick={this.openCreateModal}>
                                 新增
                             </Button>
                             <Button ghost type="danger" className="ml8" icon="delete">
@@ -106,7 +115,11 @@ class Show extends Component {
                     </Row>
                 </Form>
                 <Table columns={columns} dataSource={dataSource} rowKey="id" loading={isLoading} />
-                <CreateModal createMaterials={createMaterials}  />
+                <CreateModal
+                    createMaterials={createMaterials}
+                    onOk={this.closeCreateModal}
+                    onCancel={this.closeCreateModal}
+                />
             </div>
         );
     }

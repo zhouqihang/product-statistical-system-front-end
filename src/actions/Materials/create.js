@@ -5,16 +5,19 @@ import { message } from 'antd';
 import { post } from '../../common/requests/request';
 import { create } from '../../common/requests/Materials';
 
-export const NUMBER_CHANGE = 'number_change';
-export const TITLE_CHANGE = 'title_change';
-export const UNIT_CHANGE = 'unit_change';
-export const COUNT_CHANGE = 'count_change';
-export const DANGER_CHANGE = 'danger_change';
-export const REMARK_CHANGE = 'remark_change';
-export const POSTING_MATERIAL = 'posting_material';
-export const POST_MATERIAL_SUCCESS = 'post_material_success';
-export const POST_MATERIAL_FAILURE = 'post_material_failure';
-export const INIT_CREATE_STATE = 'init_create_state';
+import { requestMaterials } from './show';
+
+export const NUMBER_CHANGE = Symbol('number_change');
+export const TITLE_CHANGE = Symbol('title_change');
+export const UNIT_CHANGE = Symbol('unit_change');
+export const COUNT_CHANGE = Symbol('count_change');
+export const DANGER_CHANGE = Symbol('danger_change');
+export const REMARK_CHANGE = Symbol('remark_change');
+export const POSTING_MATERIAL = Symbol('posting_material');
+export const POST_MATERIAL_SUCCESS = Symbol('post_material_success');
+export const POST_MATERIAL_FAILURE = Symbol('post_material_failure');
+export const INIT_CREATE_STATE = Symbol('init_create_state');
+export const CHANGE_CREATE_STATUS = Symbol('change_create_status');
 
 const mapNameToAction = {
     number: NUMBER_CHANGE,
@@ -47,7 +50,7 @@ const canCreateMaterial = (createMaterials) => {
         unit,
         count,
         danger,
-        remark,
+        // remark,
     } = createMaterials;
     if (number.value === '' && title.value === '') {
         message.error('原料编号和原料名称至少需要填写一个');
@@ -55,6 +58,14 @@ const canCreateMaterial = (createMaterials) => {
     }
     if (unit.value === '') {
         message.error('请填写原料计量单位');
+        return false;
+    }
+    if (count < 0) {
+        message.error('库存数量不能小于0');
+        return false;
+    }
+    if (danger < 0) {
+        message.error('报警数量不能小于0');
         return false;
     }
     return true;
@@ -89,6 +100,7 @@ export const createMaterial = () => {
                 .then(res => {
                     message.success('新增成功');
                     dispatch({ type: POST_MATERIAL_SUCCESS, value: res });
+                    dispatch(requestMaterials());
                 })
                 .catch(e => {
                     message.error('新增失败：' + e);
@@ -103,4 +115,13 @@ export const createMaterial = () => {
  */
 export const initState = () => ({
     type: INIT_CREATE_STATE,
+});
+
+/**
+ * 更改isCreating
+ * @param {boolean} isCreating
+ */
+export const changeCreateStatus = isCreating => ({
+    type: CHANGE_CREATE_STATUS,
+    value: isCreating,
 });

@@ -12,6 +12,7 @@ import {
     POST_MATERIAL_SUCCESS,
     POST_MATERIAL_FAILURE,
     INIT_CREATE_STATE,
+    CHANGE_CREATE_STATUS
 } from '../../actions/Materials/create';
 
 const statusEnum = {
@@ -122,11 +123,13 @@ const createMaterials = (state = defaultState, action) => {
         case POSTING_MATERIAL:
             return {...state, isPosting: true};
         case POST_MATERIAL_SUCCESS:
-            return {...state, isPosting: false, id: action.value.id};
+            return {...state, isPosting: false, isCreating: false};
         case POST_MATERIAL_FAILURE:
             return {...state, isPosting: false};
         case INIT_CREATE_STATE:
             return defaultState;
+        case CHANGE_CREATE_STATUS:
+            return {...state, isCreating: action.value};
         default:
             return state;
     }

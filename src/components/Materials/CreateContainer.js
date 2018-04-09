@@ -3,7 +3,8 @@
  */
 
 import React, { Component } from 'react';
-import { Form, Input, Button, InputNumber } from 'antd';
+import { Form, Input, InputNumber } from 'antd';
+import PropTypes from 'prop-types';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -11,11 +12,11 @@ const formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 14 },
 };
-const buttonItemLayout = {
-    wrapperCol: { span: 14, offset: 4 },
-};
+// const buttonItemLayout = {
+//     wrapperCol: { span: 14, offset: 4 },
+// };
 
-class Create extends Component {
+class CreateContainer extends Component {
 
     constructor(props) {
         super(props);
@@ -25,31 +26,20 @@ class Create extends Component {
     }
 
     onInputChange(e) {
-        const { dispatch, onInputChangeAction } = this.props;
-        dispatch(onInputChangeAction(e.target.name, e.target.value));
+        this.props.onInputChange(e.target.name, e.target.value);
     }
 
     onInputNumberChange(name, value) {
-        const { dispatch, onInputChangeAction } = this.props;
-        dispatch(onInputChangeAction(name, value));
+        this.props.onInputChange(name, value);
     }
 
     onSubmit() {
-        const { dispatch, createMaterial } = this.props;
-        dispatch(createMaterial());
-    }
-
-    componentDidMount() {
-        // nothing to do...
-    }
-
-    componentWillUnmount() {
-        this.props.dispatch(this.props.initState());
+        this.props.onSubmit();
     }
 
     render() {
         const {
-            createMaterials,
+            material,
         } = this.props;
         const {
             number,
@@ -59,7 +49,7 @@ class Create extends Component {
             danger,
             remark,
             isPosting,
-        } = createMaterials;
+        } = material;
 
         return (
             <Form>
@@ -117,14 +107,14 @@ class Create extends Component {
                 >
                     <TextArea name="remark" placeholder="请输入" disabled={isPosting} autosize={{ minRows: 2, maxRows: 6 }} value={remark.value} onChange={this.onInputChange} />
                 </FormItem>
-                <FormItem
-                    {...buttonItemLayout}
-                >
-                    <Button type="primary" loading={isPosting} onClick={this.onSubmit}>确认</Button>
-                    <Button type="default" disabled={isPosting} className="ml24">取消</Button>
-                </FormItem>
             </Form>
         );
     }
 }
-export default Create;
+
+CreateContainer.propTypes = {
+    onInputChange: PropTypes.func.isRequired,
+    material: PropTypes.object.isRequired,
+};
+
+export default CreateContainer;

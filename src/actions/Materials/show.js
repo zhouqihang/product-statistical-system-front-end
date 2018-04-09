@@ -5,15 +5,15 @@ import { message } from 'antd';
 import { get } from '../../common/requests/request';
 import { show } from '../../common/requests/Materials';
 
-export const REQUEST_MATERIALS = 'request_materials';
-export const REQUEST_MATERIALS_SUCCESS = 'request_materials_success';
-export const REQUEST_MATERIALS_FAILED = 'request_materials_failed';
-export const NUMBER_CHANGE = 'number_change';
-export const TITLE_CHANGE = 'title_change';
-export const UNIT_CHANGE = 'unit_change';
-export const COUNT_BEGIN = 'count_begin';
-export const COUNT_END = 'count_end';
-export const RESET_QUERY = 'request_query';
+export const REQUEST_MATERIALS = Symbol('request_materials');
+export const REQUEST_MATERIALS_SUCCESS = Symbol('request_materials_success');
+export const REQUEST_MATERIALS_FAILED = Symbol('request_materials_failed');
+export const NUMBER_CHANGE = Symbol('number_change');
+export const TITLE_CHANGE = Symbol('title_change');
+export const UNIT_CHANGE = Symbol('unit_change');
+export const COUNT_BEGIN = Symbol('count_begin');
+export const COUNT_END = Symbol('count_end');
+export const RESET_QUERY = Symbol('request_query');
 
 const mapNameToAction = {
     number: NUMBER_CHANGE,
@@ -67,6 +67,9 @@ export const requestMaterials = () => {
     };
 };
 
+/**
+ * 重置查询条件
+ */
 export const resetQueryAction = () => ({
     type: RESET_QUERY,
 });

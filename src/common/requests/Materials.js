@@ -4,10 +4,12 @@
 
 export const create = `/materials`;
 export const show = `/materials`;
+export const remove = `/materials`;
 
 const materials = {
     create,
     show,
+    remove,
 };
 
 export default materials;

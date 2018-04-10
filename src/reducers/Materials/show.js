@@ -14,14 +14,6 @@ import {
 } from '../../actions/Materials/show';
 
 const defaultState = {
-    columns: [
-        { dataIndex: 'material_number', title: '编号' },
-        { dataIndex: 'material_title', title: '名称' },
-        { dataIndex: 'material_unit', title: '计量单位' },
-        { dataIndex: 'material_danger', title: '报警数量' },
-        { dataIndex: 'material_count', title: '库存量' },
-        { dataIndex: 'material_remark', title: '备注' },
-    ],
     dataSource: [],
     isLoading: false,
     page: 1,

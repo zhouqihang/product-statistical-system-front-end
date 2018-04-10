@@ -2,8 +2,8 @@
  * Created by zhouqihang on 2018/3/15.
  */
 import { message } from 'antd';
-import { get } from '../../common/requests/request';
-import { show } from '../../common/requests/Materials';
+import { get, remove } from '../../common/requests/request';
+import { show, remove as removeMaterialApi } from '../../common/requests/Materials';
 
 export const REQUEST_MATERIALS = Symbol('request_materials');
 export const REQUEST_MATERIALS_SUCCESS = Symbol('request_materials_success');
@@ -67,6 +67,28 @@ export const requestMaterials = (page = 1, pagesize = 10) => {
                 message.error(err);
             });
     };
+};
+
+/**
+ * remove material
+ * @param {number} id material id
+ * @returns {*}
+ */
+export const removeMaterial = (id = 0) => {
+    if (id === 0) {
+        return false;
+    }
+    return (dispatch, getState) => {
+        const url = removeMaterialApi + '/' + id;
+        return remove(url, {})
+            .then(res => {
+                message.success('删除成功');
+                dispatch(requestMaterials());
+            })
+            .catch(err => {
+                message.error('删除失败：' + err);
+            });
+    }
 };
 
 /**

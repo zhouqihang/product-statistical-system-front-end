@@ -2,7 +2,7 @@
  * Created by zhouqihang on 2018/3/14.
  */
 import React, { Component } from 'react';
-import { Table, Form, Row, Col, Button, Input } from 'antd';
+import { Table, Form, Row, Col, Button, Input, Popconfirm } from 'antd';
 import InputNumberRange from '../Base/InputNumberRange';
 import CreateModal from './CreateModal';
 
@@ -12,8 +12,28 @@ class Show extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.columns = [
+            { dataIndex: 'material_number', title: '编号' },
+            { dataIndex: 'material_title', title: '名称' },
+            { dataIndex: 'material_unit', title: '计量单位' },
+            { dataIndex: 'material_danger', title: '报警数量' },
+            { dataIndex: 'material_count', title: '库存量' },
+            {
+                title: '操作',
+                key: 'action',
+                render: (text, record, index) => (
+                    <Popconfirm
+                        title="确认要删除吗？"
+                        onConfirm={() => this.removeMaterial(record.id)}
+                        okText="删除"
+                        cancelText="取消"
+                        okType="danger"
+                    >
+                        <a href="javascript:;">delete</a>
+                    </Popconfirm>
+                )
+            },
+        ],
 
         this.onInputChange = this.onInputChange.bind(this);
         this.onInputNumberChange = this.onInputNumberChange.bind(this);
@@ -24,6 +44,7 @@ class Show extends Component {
         this.onCreateInputChange = this.onCreateInputChange.bind(this);
         this.createMaterial = this.createMaterial.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
+        this.removeMaterial = this.removeMaterial.bind(this);
     }
 
     onInputChange({ target }) {
@@ -58,6 +79,13 @@ class Show extends Component {
         this.props.dispatch(this.props.createMaterial());
     }
 
+    removeMaterial(id = 0) {
+        if (id === 0) {
+            return false;
+        }
+        this.props.dispatch(this.props.removeMaterial(id));
+    }
+
     onPageChange(page, pagesize) {
         this.props.dispatch(this.props.requestMaterials(page, pagesize));
     }
@@ -69,7 +97,7 @@ class Show extends Component {
     render() {
         // rowSelection={rowSelection}
         const { materials, createMaterials } = this.props;
-        const { columns, dataSource, isLoading, number, title, unit, countBegin, countEnd, page, total } = materials;
+        const { dataSource, isLoading, number, title, unit, countBegin, countEnd, page, total } = materials;
         const startProps = {
             min: 0,
             step: 1,
@@ -117,9 +145,9 @@ class Show extends Component {
                             <Button ghost type="primary" icon="plus" onClick={this.openCreateModal}>
                                 新增
                             </Button>
-                            <Button ghost type="danger" className="ml8" icon="delete">
-                                删除
-                            </Button>
+                            {/*<Button ghost type="danger" className="ml8" icon="delete">*/}
+                                {/*删除*/}
+                            {/*</Button>*/}
                         </Col>
                         <Col span={12} style={{ textAlign: 'right' }}>
                             <Button type="primary" onClick={this.handleSearch} loading={isLoading}>搜索</Button>
@@ -130,7 +158,7 @@ class Show extends Component {
                     </Row>
                 </Form>
                 <Table
-                    columns={columns}
+                    columns={this.columns}
                     dataSource={dataSource}
                     rowKey="id"
                     loading={isLoading}

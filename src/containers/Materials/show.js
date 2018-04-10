@@ -7,6 +7,7 @@ import {
     requestMaterials,
     onInputChangeAction,
     resetQueryAction,
+    removeMaterial,
 } from '../../actions/Materials/show';
 
 import {
@@ -31,7 +32,10 @@ const mapDispatchToProps = dispatch => ({
     changeCreateStatus,
     initState,
     onCreateInputChangeAction,
-    createMaterial
+    createMaterial,
+
+    // remove
+    removeMaterial
 });
 
 const MaterialsContainer = connect(

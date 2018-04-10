@@ -23,6 +23,7 @@ class Show extends Component {
         this.closeCreateModal = this.closeCreateModal.bind(this);
         this.onCreateInputChange = this.onCreateInputChange.bind(this);
         this.createMaterial = this.createMaterial.bind(this);
+        this.onPageChange = this.onPageChange.bind(this);
     }
 
     onInputChange({ target }) {
@@ -57,6 +58,10 @@ class Show extends Component {
         this.props.dispatch(this.props.createMaterial());
     }
 
+    onPageChange(page, pagesize) {
+        this.props.dispatch(this.props.requestMaterials(page, pagesize));
+    }
+
     componentDidMount() {
         this.props.dispatch(this.props.requestMaterials());
     }
@@ -64,7 +69,7 @@ class Show extends Component {
     render() {
         // rowSelection={rowSelection}
         const { materials, createMaterials } = this.props;
-        const { columns, dataSource, isLoading, number, title, unit, countBegin, countEnd } = materials;
+        const { columns, dataSource, isLoading, number, title, unit, countBegin, countEnd, page, total } = materials;
         const startProps = {
             min: 0,
             step: 1,
@@ -124,7 +129,13 @@ class Show extends Component {
                         </Col>
                     </Row>
                 </Form>
-                <Table columns={columns} dataSource={dataSource} rowKey="id" loading={isLoading} />
+                <Table
+                    columns={columns}
+                    dataSource={dataSource}
+                    rowKey="id"
+                    loading={isLoading}
+                    pagination={{current: page, total, onChange: this.onPageChange}}
+                />
                 <CreateModal
                     createMaterials={createMaterials}
                     onOk={this.createMaterial}

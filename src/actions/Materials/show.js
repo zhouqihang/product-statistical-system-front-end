@@ -39,7 +39,7 @@ export const onInputChangeAction = (name, value) => ({
  * request materials list
  * @returns {function(*, *)}
  */
-export const requestMaterials = () => {
+export const requestMaterials = (page = 1, pagesize = 10) => {
     return (dispatch, getState) => {
         dispatch({ type: REQUEST_MATERIALS });
         const { materials } = getState();
@@ -50,6 +50,8 @@ export const requestMaterials = () => {
             unit,
             countBegin,
             countEnd,
+            page,
+            pagesize
         };
         return get(show, params)
             .then(res => {

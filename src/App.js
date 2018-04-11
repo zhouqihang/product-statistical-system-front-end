@@ -71,7 +71,7 @@ class App extends Component {
                             </Switch>
                         </Content>
                         <Footer style={{textAlign: 'center'}}>
-                            Ant Design ©2016 Created by Ant UED
+                            product-statistical-system ©2018 Created by Qi Hang
                         </Footer>
                     </Layout>
                 </Layout>

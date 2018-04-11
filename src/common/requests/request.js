@@ -57,12 +57,14 @@ export const get = (url, params = {}) => base(url, params, 'get');
 export const post = (url, params = {}) => base(url, params, 'post');
 export const remove = (url, params = {}) => base(url, params, 'delete');
 export const patch = (url, params = {}) => base(url, params, 'patch');
+export const put = (url, params = {}) => base(url, params, 'put');
 
 const request = {
     get,
     post,
     remove,
     patch,
+    put,
 };
 
 export default request;

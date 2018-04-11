@@ -2,7 +2,7 @@
  * Created by zhouqihang on 2018/3/14.
  */
 import React, { Component } from 'react';
-import { Table, Form, Row, Col, Button, Input, Popconfirm } from 'antd';
+import { Table, Form, Row, Col, Button, Input, Popconfirm, Icon } from 'antd';
 import InputNumberRange from '../Base/InputNumberRange';
 import CreateModal from './CreateModal';
 
@@ -21,19 +21,25 @@ class Show extends Component {
             {
                 title: '操作',
                 key: 'action',
-                render: (text, record, index) => (
+                render: (text, record, index) => [
+                    <a href="#" key={record.id + 'edit'} onClick={() => this.openCreateModal(record.id)}>
+                        <Icon type="edit" />
+                    </a>,
                     <Popconfirm
                         title="确认要删除吗？"
                         onConfirm={() => this.removeMaterial(record.id)}
                         okText="删除"
                         cancelText="取消"
                         okType="danger"
+                        key={record.id + 'remove'}
                     >
-                        <a href="javascript:;">delete</a>
-                    </Popconfirm>
-                )
+                        <a href="#" style={{color: '#f5222d'}} className="ml8">
+                            <Icon type="delete" />
+                        </a>
+                    </Popconfirm>,
+                ]
             },
-        ],
+        ];
 
         this.onInputChange = this.onInputChange.bind(this);
         this.onInputNumberChange = this.onInputNumberChange.bind(this);
@@ -64,8 +70,11 @@ class Show extends Component {
         this.props.dispatch(this.props.resetQueryAction());
     }
 
-    openCreateModal() {
-        this.props.dispatch(this.props.changeCreateStatus(true));
+    openCreateModal(id = 0) {
+        this.props.dispatch(this.props.changeCreateStatus(true, id));
+        if (id !== 0) {
+            this.props.dispatch(this.props.queryMaterial());
+        }
     }
     closeCreateModal() {
         this.props.dispatch(this.props.initState());

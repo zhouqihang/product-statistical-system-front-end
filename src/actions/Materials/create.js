@@ -2,9 +2,8 @@
  * Created by zhouqihang on 2018/3/14.
  */
 import { message } from 'antd';
-import { post } from '../../common/requests/request';
-import { create } from '../../common/requests/Materials';
-
+import { post, get, put } from '../../common/requests/request';
+import { create, query } from '../../common/requests/Materials';
 import { requestMaterials } from './show';
 
 export const NUMBER_CHANGE = Symbol('number_change');
@@ -18,6 +17,9 @@ export const POST_MATERIAL_SUCCESS = Symbol('post_material_success');
 export const POST_MATERIAL_FAILURE = Symbol('post_material_failure');
 export const INIT_CREATE_STATE = Symbol('init_create_state');
 export const CHANGE_CREATE_STATUS = Symbol('change_create_status');
+export const REQUEST_MATERIAL = Symbol('request_material');
+export const REQUEST_MATERIAL_SUCCESS = Symbol('request_material_success');
+export const REQUEST_MATERIAL_FAILURE = Symbol('request_material_failure');
 
 const mapNameToAction = {
     number: NUMBER_CHANGE,
@@ -87,6 +89,7 @@ export const createMaterial = () => {
                 count,
                 danger,
                 remark,
+                id,
             } = createMaterials;
             const params = {
                 number: number.value,
@@ -96,18 +99,36 @@ export const createMaterial = () => {
                 danger: danger.value,
                 remark: remark.value,
             };
-            return post(create, params)
+            const url = id === 0 ? create : `${create}/${id}`;
+            const requestType = id === 0 ? post : put;
+            const type = id === 0 ? '新增' : '更新';
+            return requestType(url, params)
                 .then(res => {
-                    message.success('新增成功');
+                    message.success(type + '成功');
                     dispatch({ type: POST_MATERIAL_SUCCESS, value: res });
                     dispatch(requestMaterials());
                 })
                 .catch(e => {
-                    message.error('新增失败：' + e);
+                    message.error(type + '失败：' + e);
                     dispatch({ type: POST_MATERIAL_FAILURE });
                 });
         }
     }
+};
+
+export const queryMaterial = () => (dispatch, getState) => {
+    const { createMaterials } = getState();
+    const { id } = createMaterials;
+    const url = query + '/' + id;
+    dispatch({ type: REQUEST_MATERIAL});
+    return get(url, {})
+        .then(res => {
+            dispatch({ type: REQUEST_MATERIAL_SUCCESS, value: res });
+        })
+        .catch(e => {
+            message.error('数据获取失败：' + e);
+            dispatch({ type: REQUEST_MATERIAL_FAILURE });
+        });
 };
 
 /**
@@ -120,8 +141,10 @@ export const initState = () => ({
 /**
  * 更改isCreating
  * @param {boolean} isCreating
+ * @param {number} id
  */
-export const changeCreateStatus = isCreating => ({
+export const changeCreateStatus = (isCreating, id = 0) => ({
     type: CHANGE_CREATE_STATUS,
     value: isCreating,
+    id,
 });

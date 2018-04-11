@@ -15,6 +15,7 @@ import {
     initState,
     onInputChangeAction as onCreateInputChangeAction,
     createMaterial,
+    queryMaterial,
 } from '../../actions/Materials/create';
 
 const mapStateToProps = ({ materials, createMaterials }) => ({
@@ -33,6 +34,7 @@ const mapDispatchToProps = dispatch => ({
     initState,
     onCreateInputChangeAction,
     createMaterial,
+    queryMaterial,
 
     // remove
     removeMaterial

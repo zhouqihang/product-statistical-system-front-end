@@ -12,7 +12,10 @@ import {
     POST_MATERIAL_SUCCESS,
     POST_MATERIAL_FAILURE,
     INIT_CREATE_STATE,
-    CHANGE_CREATE_STATUS
+    CHANGE_CREATE_STATUS,
+    REQUEST_MATERIAL,
+    REQUEST_MATERIAL_SUCCESS,
+    REQUEST_MATERIAL_FAILURE,
 } from '../../actions/Materials/create';
 
 const statusEnum = {
@@ -55,8 +58,12 @@ let defaultState = {
         status: statusEnum.normal,
         help: '',
     },
+    // 正在发送请求
     isPosting: false,
+    // 是否显示
     isCreating: false,
+    // 正在请求数据
+    isLoading: false,
 };
 
 const createMaterials = (state = defaultState, action) => {
@@ -123,14 +130,36 @@ const createMaterials = (state = defaultState, action) => {
         case POSTING_MATERIAL:
             return {...state, isPosting: true};
         case POST_MATERIAL_SUCCESS:
+        case INIT_CREATE_STATE:
             return defaultState;
             // return {...state, isPosting: false, isCreating: false};
         case POST_MATERIAL_FAILURE:
             return {...state, isPosting: false};
-        case INIT_CREATE_STATE:
-            return defaultState;
         case CHANGE_CREATE_STATUS:
-            return {...state, isCreating: action.value};
+            return {...state, isCreating: action.value, id: action.id};
+        case REQUEST_MATERIAL:
+            return {...state, isLoading: true};
+        case REQUEST_MATERIAL_SUCCESS:
+            const {
+                material_count,
+                material_danger,
+                material_number,
+                material_remark,
+                material_title,
+                material_unit,
+            } = action.value;
+            return {
+                ...state,
+                isLoading: false,
+                count: {...count, value: material_count},
+                title: {...title, value: material_title},
+                danger: {...danger, value: material_danger},
+                number: {...number, value: material_number},
+                remark: {...remark, value: material_remark},
+                unit: {...unit, value: material_unit},
+            };
+        case REQUEST_MATERIAL_FAILURE:
+            return {...state, isLoading: false};
         default:
             return state;
     }

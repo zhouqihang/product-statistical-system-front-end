@@ -5,11 +5,13 @@
 export const create = `/materials`;
 export const show = `/materials`;
 export const remove = `/materials`;
+export const query = `/materials`;
 
 const materials = {
     create,
     show,
     remove,
+    query,
 };
 
 export default materials;

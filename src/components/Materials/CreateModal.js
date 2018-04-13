@@ -18,9 +18,10 @@ class CreateModal extends React.Component {
 
     render() {
         const { createMaterials, onCreateInputChange, onOk } = this.props;
-        const { isCreating, isPosting, isLoading } = createMaterials;
+        const { isCreating, isPosting, isLoading, id } = createMaterials;
+        const title = id === 0 ? '新增原料' : '更新原料信息';
         return (
-            <Modal title="新增原料"
+            <Modal title={title}
                    visible={isCreating}
                    onOk={onOk}
                    confirmLoading={isPosting}

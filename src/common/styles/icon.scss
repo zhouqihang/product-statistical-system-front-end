@@ -1,0 +1,10 @@
+@import "color";
+.icon {
+  cursor: pointer;
+  &.icon-primary {
+    color: $primary;
+  }
+  &.icon-danger {
+    color: $danger;
+  }
+}

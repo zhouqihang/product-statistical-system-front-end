@@ -22,9 +22,12 @@ class Show extends Component {
                 title: '操作',
                 key: 'action',
                 render: (text, record, index) => [
-                    <a href="#" key={record.id + 'edit'} onClick={() => this.openCreateModal(record.id)}>
-                        <Icon type="edit" />
-                    </a>,
+                    <Icon
+                        type="edit"
+                        key={record.id + 'edit'}
+                        onClick={() => this.openCreateModal(record.id)}
+                        className="icon icon-primary"
+                    />,
                     <Popconfirm
                         title="确认要删除吗？"
                         onConfirm={() => this.removeMaterial(record.id)}
@@ -33,9 +36,7 @@ class Show extends Component {
                         okType="danger"
                         key={record.id + 'remove'}
                     >
-                        <a href="#" style={{color: '#f5222d'}} className="ml8">
-                            <Icon type="delete" />
-                        </a>
+                        <Icon type="delete" className="icon icon-danger ml8" />
                     </Popconfirm>,
                 ]
             },
